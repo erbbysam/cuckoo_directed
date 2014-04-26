@@ -18,7 +18,7 @@ This code does require openssl at this time and the only non-portable piece is t
 
 -Sam
 
-
+```
 Example output:
 With PROOFSIZE = 2
 
@@ -70,3 +70,4 @@ Size:10 Memory:110300 Chains:658151 Edges:3746822
 3: u:11873 v:2295(recomputed) nonce:266625 j:35283286125
 2: u:11873(recomputed) v:43714 nonce:132333 j:132333
 1: u:4527 v:43714(recomputed) nonce:0 j:1
+```
