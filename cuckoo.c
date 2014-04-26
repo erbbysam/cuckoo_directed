@@ -39,33 +39,6 @@ uint first_pass = 0;
 /* proof size to seek out first */
 uint current_seeking_proofsize = PROOFSIZE;
 
-/*
- * Used for getting amount of memory usage
- * via http://stackoverflow.com/questions/1558402/memory-usage-of-current-process-in-c
- */
-typedef struct {
-    unsigned long size,resident,share,text,lib,data,dt;
-} statm_t;
-
-void read_off_memory_status(statm_t *result)
-{
-  const char* statm_path = "/proc/self/statm";
-
-  FILE *f = fopen(statm_path,"r");
-  if(!f){
-    perror(statm_path);
-    abort();
-  }
-  if(7 != fscanf(f,"%ld %ld %ld %ld %ld %ld %ld",
-    &result->size,&result->resident,&result->share,
-	&result->text,&result->lib,&result->data,&result->dt))
-  {
-    perror(statm_path);
-    abort();
-  }
-  fclose(f);
-}
-
 /* search through existing chains for a match
  * returns: chain to add to, or NULL if one is not found
  */
@@ -207,12 +180,12 @@ void dump_solution(siphash_ctx *ctx,edge_chain *cur) {
 	printf("hash: %s (%d zeros)\n",outputBuffer, zero_count);
 	
 	printf("Sol:\n");
-	statm_t  *result = calloc(1,sizeof(statm_t));
-	read_off_memory_status(result);
-	printf("Size:%u Memory:%lu Chains:%llu Edges:%llu\n",
-		   current_seeking_proofsize,result->size,
+	
+	int mem_usage = edge_count * sizeof(edge_chain) + 
+					HALFSIZE* sizeof(storage_array);
+	printf("Size:%u Memory:%d bytes Chains:%llu Edges:%llu\n",
+		   current_seeking_proofsize, mem_usage,
 		   (long long unsigned int)chain_count,(long long unsigned int)edge_count);
-	free(result);
 	
 	while (1) { 
 		if (cur == NULL) { break; }
