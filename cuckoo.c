@@ -181,8 +181,8 @@ void dump_solution(siphash_ctx *ctx,edge_chain *cur) {
 	
 	printf("Sol:\n");
 	
-	int mem_usage = edge_count * sizeof(edge_chain) + 
-					HALFSIZE* sizeof(storage_array);
+	int mem_usage = (edge_count * sizeof(edge_chain)) + 
+					(2 * HALFSIZE * sizeof(storage_array));
 	printf("Size:%u Memory:%d bytes Chains:%llu Edges:%llu\n",
 		   current_seeking_proofsize, mem_usage,
 		   (long long unsigned int)chain_count,(long long unsigned int)edge_count);
