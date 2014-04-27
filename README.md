@@ -14,7 +14,7 @@ Read this paper/the original paper for more details on the algorithm itself.
 
 The only code used from the original cuckoo repo (https://github.com/tromp/cuckoo) was part of the header file(cuckoo.h). 
 
-This code does require openssl at this time and the only non-portable piece is the function "read_off_memory_status" which will likely only work on linux systems (and is non-critical, just is used to print memory statistics).
+This code does require openssl at this time and should be entirely portable to any unix/linux system.
 
 -Sam
 
